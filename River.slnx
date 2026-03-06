@@ -1,5 +1,0 @@
-<Solution>
-  <Project Path="River.BackgroundServices/River.BackgroundServices.csproj" />
-  <Project Path="River.Core/River.Core.csproj" />
-  <Project Path="River.Infrastructure/River.Infrastructure.csproj" />
-</Solution>
