@@ -1,9 +1,9 @@
-﻿using River.Infrastructure.DataAccessLayer.Interfaces;
+﻿using River.Infrastructure.DataAccessLayer.EF.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace River.Infrastructure.DataAccessLayer.Entities
+namespace River.Infrastructure.DataAccessLayer.EF.Entities
 {
     public class Directory : IDirectory
     {
