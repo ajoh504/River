@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DataAccessLayer\Repositories\" />
+    <Folder Include="DataAccessLayer\EF\Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
