@@ -1,3 +1,5 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using River.BackgroundServices.Workers;
 
 namespace River.BackgroundServices

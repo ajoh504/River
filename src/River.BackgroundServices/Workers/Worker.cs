@@ -1,4 +1,9 @@
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using River.BackgroundServices.Interfaces;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace River.BackgroundServices.Workers
 {

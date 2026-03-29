@@ -1,4 +1,6 @@
-﻿namespace River.Core
+﻿using System;
+
+namespace River.Core
 {
     internal class Program
     {

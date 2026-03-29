@@ -1,3 +1,5 @@
+using System;
+
 namespace River.API
 {
     public class WeatherForecast
