@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <ImplicitUsings>disable</ImplicitUsings>
     <UserSecretsId>dotnet-River.BackgroundServices-42ebeddd-cd40-4553-8c39-2d99de0081e7</UserSecretsId>
   </PropertyGroup>
 
