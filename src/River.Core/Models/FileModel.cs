@@ -5,7 +5,7 @@
         string Path,
         string Name,
         string Extension,
-        int DirectoryId,
+        long DirectoryId,
         bool Ignore,
         bool Inactive
      );
