@@ -7,7 +7,7 @@ using River.Infrastructure.DataAccessLayer;
 
 #nullable disable
 
-namespace River.Infrastructure.Migrations
+namespace River.Infrastructure.DataAccessLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot

@@ -8,7 +8,7 @@ using River.Infrastructure.DataAccessLayer;
 
 #nullable disable
 
-namespace River.Infrastructure.Migrations
+namespace River.Infrastructure.DataAccessLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20260405135026_InitialCreate")]
