@@ -18,6 +18,14 @@ namespace River.API
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+            string connectionString =
+                builder.Configuration.GetConnectionString("PostgreSqlConnection")
+                    ?? throw new InvalidOperationException("Connection string"
+                    + "'DefaultConnection' not found.");
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseNpgsql(connectionString));
+
             WebApplication app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -30,13 +38,6 @@ namespace River.API
             app.UseAuthorization();
             app.MapControllers();
 
-            string connectionString =
-                builder.Configuration.GetConnectionString("PostgreSqlConnection")
-                    ?? throw new InvalidOperationException("Connection string"
-                    + "'DefaultConnection' not found.");
-
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(connectionString));
 
             app.Run();
         }
