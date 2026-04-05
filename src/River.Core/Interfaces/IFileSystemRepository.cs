@@ -5,9 +5,9 @@ namespace River.Core.Interfaces
 {
     public interface IFileSystemRepository
     {
-        public Task<FileModel>? GetFileByIdAsync(long Id);
-        public Task<DirectoryModel>? GetDirectoryByIdAsync(long Id);
-        public Task SaveDirectoryAsync(FileModel file);
-        public Task SaveDirectoryAsync(DirectoryModel directory);
+        public Task<DirectoryModel?> GetDirectoryByIdAsync(long Id);
+        public Task<FileModel?> GetFileByIdAsync(long Id);
+        public Task<int> SaveDirectoryAsync(DirectoryModel directory);
+        public Task<int> SaveFileAsync(FileModel file, DirectoryModel directory);
     }
 }
