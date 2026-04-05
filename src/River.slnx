@@ -2,5 +2,6 @@
   <Project Path="River.API/River.API.csproj" Id="3513c595-11b9-4dc1-b232-0d0e9b676362" />
   <Project Path="River.BackgroundServices/River.BackgroundServices.csproj" />
   <Project Path="River.Core/River.Core.csproj" />
+  <Project Path="River.Infrastructure.Tests/River.Infrastructure.Tests.csproj" Id="4137ec44-0709-488b-8641-8ecc81dbf04d" />
   <Project Path="River.Infrastructure/River.Infrastructure.csproj" />
 </Solution>
