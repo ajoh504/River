@@ -14,7 +14,35 @@ namespace River.Infrastructure.DataAccessLayer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<DirectoryEntity>(entity =>
+            {
+                entity.ToTable("directory");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Name).HasColumnName("name").IsRequired();
+                entity.Property(e => e.Path).HasColumnName("path").IsRequired();
+                entity.Property(e => e.Ignore).HasColumnName("ignore");
+                entity.Property(e => e.Inactive).HasColumnName("inactive");
+
+                // Define relationship to ensure DirectoryId is used as the Foreign Key
+                entity.HasMany(d => d.Files)
+                      .WithOne()
+                      .HasForeignKey(f => f.DirectoryId)
+                      .IsRequired();
+            });
+
+            modelBuilder.Entity<FileEntity>(entity =>
+            {
+                entity.ToTable("file");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Name).HasColumnName("name").IsRequired();
+                entity.Property(e => e.Path).HasColumnName("path").IsRequired();
+                entity.Property(e => e.Extension).HasColumnName("extension").IsRequired();
+                entity.Property(e => e.DirectoryId).HasColumnName("directory_id");
+                entity.Property(e => e.Ignore).HasColumnName("ignore");
+                entity.Property(e => e.Inactive).HasColumnName("inactive");
+            });
 
             // EF scans the assembly, finds classes implementing IEntityTypeConfiguration, 
             // and calls their .Configure() methods automatically.
