@@ -17,65 +17,82 @@ namespace River.Infrastructure.DataAccessLayer.Repositories
             _context = context;
         }
 
-        public async Task<DirectoryModel?> GetDirectoryByIdAsync(long Id)
+        public async Task<TrackedDirectoryModel?> GetDirectoryByIdAsync(ulong Id)
         {
             return await _context.Directories
                     .AsNoTracking()
                     .Where(d => d.Id == Id)
-                    .Select(d => new DirectoryModel(
+                    .Select(d => new TrackedDirectoryModel(
                         d.Id,
                         d.Name,
                         d.Path,
-                        d.Ignore,
-                        d.Files.Select(f => new FileModel(
-                            f.Id, f.Path, f.Name, f.Extension, f.DirectoryId, f.Ignore, f.Inactive
+                        d.Files.Select(f => new TrackedFileModel(
+                            f.Id, f.Path, f.Name, f.Extension, f.DirectoryId, f.Inactive
                         )),
                         d.Inactive
                     ))
                     .FirstOrDefaultAsync();
         }
 
-        public async Task<FileModel?> GetFileByIdAsync(long Id)
+        public async Task<TrackedFileModel?> GetFileByIdAsync(ulong Id)
         {
             return await _context.Files
                 .AsNoTracking()
                 .Where(f => f.Id == Id)
-                .Select(f => new FileModel(
+                .Select(f => new TrackedFileModel(
                     f.Id, 
                     f.Path, 
                     f.Name, 
                     f.Extension, 
                     f.DirectoryId, 
-                    f.Ignore, 
                     f.Inactive
                 ))
                 .FirstOrDefaultAsync();
         }
 
-        public Task<int> SaveDirectoryAsync(DirectoryModel directory)
+        public Task<int> SaveDirectoryAsync(TrackedDirectoryModel directoryModel)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
+            //string? normalizedBaseDirectory = directoryModel.Path?.TrimEnd(System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar);
+            //if (normalizedBaseDirectory == null)
+            //{
+            //    throw new ArgumentException("Path argument normalization returned null");
+            //}
+
+            //DirectoryEntity entity = new DirectoryEntity();
         }
 
-        public async Task<int> SaveFileAsync(FileModel file, DirectoryModel directoryModel)
+        public async Task<int> SaveFileAsync(TrackedFileModel fileModel, TrackedDirectoryModel directoryModel)
         {
-            string? normalizedFileDir = System.IO.Path.GetDirectoryName(file.Path)?.TrimEnd(System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar);
-            string? normalizedBaseDir = directoryModel.Path?.TrimEnd(System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar);
-
-            if (!string.Equals(normalizedFileDir, normalizedBaseDir, StringComparison.OrdinalIgnoreCase))
+            string? normalizedParentDirectory = System.IO.Path.GetDirectoryName(fileModel.Path)?.TrimEnd(System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar);
+            string? normalizedBaseDirectory = directoryModel.Path?.TrimEnd(System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar);
+            if (normalizedBaseDirectory == null || normalizedParentDirectory == null)
+            {
+                throw new ArgumentException("Path argument normalization returned null");
+            }
+            if (!string.Equals(normalizedParentDirectory, normalizedBaseDirectory, StringComparison.OrdinalIgnoreCase))
             {
                 throw new ArgumentException("There was a file/directory mismatch during the save operation");
             }
 
-            FileEntity entity = new FileEntity(
-                file.Path,
+            TrackedFileEntity entity = new TrackedFileEntity(
+                fileModel.Path,
                 directoryModel.Id,
-                file.Ignore,
-                file.Inactive
+                fileModel.Inactive
             );
 
             _context.Files.Add(entity);
             return await _context.SaveChangesAsync();
+        }
+
+        public Task<int> SaveIgnoredDirectoryAsync(IgnoredDirectoryModel directoryModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> SaveIgnoredFileAsync(IgnoredFileModel fileModel, IgnoredDirectoryModel directoryModel)
+        {
+            throw new NotImplementedException();
         }
     }
 }

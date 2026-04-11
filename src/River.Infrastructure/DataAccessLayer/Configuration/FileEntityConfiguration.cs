@@ -4,9 +4,9 @@ using River.Infrastructure.DataAccessLayer.Entities;
 
 namespace River.Infrastructure.DataAccessLayer.Configuration
 {
-    internal class FileEntityConfiguration : IEntityTypeConfiguration<FileEntity>
+    internal class FileEntityConfiguration : IEntityTypeConfiguration<TrackedFileEntity>
     {
-        public void Configure(EntityTypeBuilder<FileEntity> builder)
+        public void Configure(EntityTypeBuilder<TrackedFileEntity> builder)
         {
             builder.ToTable("file");
             builder.HasKey(x => x.Id);

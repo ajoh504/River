@@ -2,12 +2,11 @@
 
 namespace River.Core.Models
 {
-    public record DirectoryModel(
-        long Id,
+    public record TrackedDirectoryModel(
+        ulong Id,
         string Name,
         string Path,
-        bool Ignore,
-        IEnumerable<FileModel> Files,
+        IEnumerable<TrackedFileModel> Files,
         bool Inactive
     );
 }
