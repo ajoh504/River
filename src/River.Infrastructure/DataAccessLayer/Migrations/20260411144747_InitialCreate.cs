@@ -73,7 +73,7 @@ namespace River.Infrastructure.Migrations
                 comment: "Represents a trackable file with no parent directory reference.");
 
             migrationBuilder.CreateTable(
-                name: "file",
+                name: "tracked_file",
                 columns: table => new
                 {
                     id = table.Column<decimal>(type: "numeric(20,0)", nullable: false),

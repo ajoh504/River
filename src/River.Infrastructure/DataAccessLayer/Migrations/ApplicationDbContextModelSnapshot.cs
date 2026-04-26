@@ -147,7 +147,7 @@ namespace River.Infrastructure.Migrations
 
                     b.HasIndex("DirectoryId");
 
-                    b.ToTable("file", null, t =>
+                    b.ToTable("tracked_file", null, t =>
                         {
                             t.HasComment("Represents a trackable file with a parent directory reference. Changes to the parent are also trackable.");
                         });
