@@ -1,7 +1,7 @@
 ﻿namespace River.Core.Models
 {
     public record IgnoredDirectoryModel(
-        ulong Id,
+        long Id,
         string Name,
         string Path,
         bool Inactive

@@ -1,7 +1,7 @@
 ﻿namespace River.Core.Models
 {
     public record IgnoredFileModel(
-        ulong Id,
+        long Id,
         string Path,
         string Name,
         string Extension,

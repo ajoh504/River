@@ -1,7 +1,7 @@
 ﻿namespace River.Core.Models
 {
     public record TrackedSoloFileModel(
-        ulong Id,
+        long Id,
         string Path,
         string Name,
         string Extension,

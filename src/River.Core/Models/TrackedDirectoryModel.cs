@@ -3,7 +3,7 @@
 namespace River.Core.Models
 {
     public record TrackedDirectoryModel(
-        ulong Id,
+        long Id,
         string Name,
         string Path,
         IEnumerable<TrackedFileModel> Files,

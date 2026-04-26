@@ -1,11 +1,11 @@
 ﻿namespace River.Core.Models
 {
     public record TrackedFileModel(
-        ulong Id,
+        long Id,
         string Path,
         string Name,
         string Extension,
-        ulong DirectoryId,
+        long DirectoryId,
         bool Inactive
      );
 }
