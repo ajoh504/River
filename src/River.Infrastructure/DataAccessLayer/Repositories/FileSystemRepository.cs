@@ -17,7 +17,7 @@ namespace River.Infrastructure.DataAccessLayer.Repositories
             _context = context;
         }
 
-        public async Task<TrackedDirectoryModel?> GetDirectoryByIdAsync(ulong Id)
+        public async Task<TrackedDirectoryModel?> GetDirectoryByIdAsync(long Id)
         {
             return await _context.Directories
                     .AsNoTracking()
@@ -34,11 +34,44 @@ namespace River.Infrastructure.DataAccessLayer.Repositories
                     .FirstOrDefaultAsync();
         }
 
-        public async Task<TrackedFileModel?> GetFileByIdAsync(ulong Id)
+        public async Task<TrackedDirectoryModel?> GetDirectoryByPathAsync(string path)
+        {
+            return await _context.Directories
+                    .AsNoTracking()
+                    .Where(d => d.Path == path)
+                    .Select(d => new TrackedDirectoryModel(
+                        d.Id,
+                        d.Name,
+                        d.Path,
+                        d.Files.Select(f => new TrackedFileModel(
+                            f.Id, f.Path, f.Name, f.Extension, f.DirectoryId, f.Inactive
+                        )),
+                        d.Inactive
+                    ))
+                    .FirstOrDefaultAsync();
+        }
+
+        public async Task<TrackedFileModel?> GetFileByIdAsync(long Id)
         {
             return await _context.Files
                 .AsNoTracking()
                 .Where(f => f.Id == Id)
+                .Select(f => new TrackedFileModel(
+                    f.Id, 
+                    f.Path, 
+                    f.Name, 
+                    f.Extension, 
+                    f.DirectoryId, 
+                    f.Inactive
+                ))
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<TrackedFileModel?> GetFileByPathAsync(string path)
+        {
+            return await _context.Files
+                .AsNoTracking()
+                .Where(f => f.Path == path)
                 .Select(f => new TrackedFileModel(
                     f.Id, 
                     f.Path, 
@@ -62,25 +95,14 @@ namespace River.Infrastructure.DataAccessLayer.Repositories
             //DirectoryEntity entity = new DirectoryEntity();
         }
 
-        public async Task<int> SaveFileAsync(TrackedFileModel fileModel, TrackedDirectoryModel directoryModel)
+        public async Task<int> SaveFileAsync(TrackedFileModel fileModel)
         {
-            string? normalizedParentDirectory = System.IO.Path.GetDirectoryName(fileModel.Path)?.TrimEnd(System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar);
-            string? normalizedBaseDirectory = directoryModel.Path?.TrimEnd(System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar);
-            if (normalizedBaseDirectory == null || normalizedParentDirectory == null)
-            {
-                throw new ArgumentException("Path argument normalization returned null");
-            }
-            if (!string.Equals(normalizedParentDirectory, normalizedBaseDirectory, StringComparison.OrdinalIgnoreCase))
-            {
-                throw new ArgumentException("There was a file/directory mismatch during the save operation");
-            }
-
             TrackedFileEntity entity = new TrackedFileEntity(
                 fileModel.Path,
-                directoryModel.Id,
+                fileModel.DirectoryId,
                 fileModel.Inactive
             );
-
+            
             _context.Files.Add(entity);
             return await _context.SaveChangesAsync();
         }

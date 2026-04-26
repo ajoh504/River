@@ -2,13 +2,13 @@
 {
     public class TrackedFileEntity
     {
-        public ulong Id { get; private set; }
+        public long Id { get; private set; }
         public string? Name { get; private set; }
         public string? Path { get; set; }
         public string? Extension { get; private set; }
-        public ulong DirectoryId { get; private set; }
+        public long DirectoryId { get; private set; }
         public bool Inactive { get; set; }
-        public TrackedFileEntity(string path, ulong directoryId, bool inactive = false)
+        public TrackedFileEntity(string path, long directoryId, bool inactive = false)
         {
             Name = System.IO.Path.GetFileNameWithoutExtension(path);
             Path = path;
@@ -16,7 +16,7 @@
             DirectoryId = directoryId;
             Inactive = inactive;
         }
-        public TrackedFileEntity(ulong id, string name, string path, string extension, ulong directoryId, bool inactive = false)
+        public TrackedFileEntity(long id, string name, string path, string extension, long directoryId, bool inactive = false)
         {
             Id = id;
             Name = name;

@@ -2,7 +2,7 @@
 {
     public class TrackedSoloFileEntity
     {
-        public ulong Id { get; private set; }
+        public long Id { get; private set; }
         public string? Name { get; private set; }
         public string? Path { get; set; }
         public string? Extension { get; private set; }
@@ -14,7 +14,7 @@
             Extension = System.IO.Path.GetExtension(path);
             Inactive = inactive;
         }
-        public TrackedSoloFileEntity(ulong id, string name, string path, string extension, bool inactive = false)
+        public TrackedSoloFileEntity(long id, string name, string path, string extension, bool inactive = false)
         {
             Id = id;
             Name = name;
