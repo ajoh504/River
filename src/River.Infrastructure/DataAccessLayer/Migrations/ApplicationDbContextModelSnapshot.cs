@@ -23,9 +23,9 @@ namespace River.Infrastructure.Migrations
 
             modelBuilder.Entity("River.Infrastructure.DataAccessLayer.Entities.IgnoredDirectoryEntity", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(20,0)")
+                        .HasColumnType("bigint")
                         .HasColumnName("id");
 
                     b.Property<bool>("Inactive")
@@ -44,6 +44,10 @@ namespace River.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Path")
+                     .IsUnique()
+                     .HasDatabaseName("IX_ignored_directory_path");
+
                     b.ToTable("ignored_directory", null, t =>
                         {
                             t.HasComment("Represents an ignorable directory. All children files are considered ignorable.");
@@ -52,9 +56,9 @@ namespace River.Infrastructure.Migrations
 
             modelBuilder.Entity("River.Infrastructure.DataAccessLayer.Entities.IgnoredFileEntity", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(20,0)")
+                        .HasColumnType("bigint")
                         .HasColumnName("id");
 
                     b.Property<string>("Extension")
@@ -78,17 +82,21 @@ namespace River.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Path")
+                     .IsUnique()
+                     .HasDatabaseName("IX_ignored_file_path");
+
                     b.ToTable("ignored_file", null, t =>
                         {
-                            t.HasComment("Represents an ignoreable file.");
+                            t.HasComment("Represents an ignorable file.");
                         });
                 });
 
             modelBuilder.Entity("River.Infrastructure.DataAccessLayer.Entities.TrackedDirectoryEntity", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(20,0)")
+                        .HasColumnType("bigint")
                         .HasColumnName("id");
 
                     b.Property<bool>("Inactive")
@@ -107,6 +115,10 @@ namespace River.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Path")
+                     .IsUnique()
+                     .HasDatabaseName("IX_tracked_directory_path");
+
                     b.ToTable("tracked_directory", null, t =>
                         {
                             t.HasComment("Represents a trackable directory. Changes to the directory, or any of its children files, are also trackable.");
@@ -115,13 +127,13 @@ namespace River.Infrastructure.Migrations
 
             modelBuilder.Entity("River.Infrastructure.DataAccessLayer.Entities.TrackedFileEntity", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(20,0)")
+                        .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    b.Property<decimal>("DirectoryId")
-                        .HasColumnType("numeric(20,0)")
+                    b.Property<long>("DirectoryId")
+                        .HasColumnType("bigint")
                         .HasColumnName("directory_id");
 
                     b.Property<string>("Extension")
@@ -147,6 +159,10 @@ namespace River.Infrastructure.Migrations
 
                     b.HasIndex("DirectoryId");
 
+                    b.HasIndex("Path")
+                     .IsUnique()
+                     .HasDatabaseName("IX_tracked_file_path");
+
                     b.ToTable("tracked_file", null, t =>
                         {
                             t.HasComment("Represents a trackable file with a parent directory reference. Changes to the parent are also trackable.");
@@ -155,9 +171,9 @@ namespace River.Infrastructure.Migrations
 
             modelBuilder.Entity("River.Infrastructure.DataAccessLayer.Entities.TrackedSoloFileEntity", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(20,0)")
+                        .HasColumnType("bigint")
                         .HasColumnName("id");
 
                     b.Property<string>("Extension")
@@ -180,6 +196,10 @@ namespace River.Infrastructure.Migrations
                         .HasColumnName("path");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Path")
+                     .IsUnique()
+                     .HasDatabaseName("IX_tracked_solo_file_path");
 
                     b.ToTable("tracked_solo_file", null, t =>
                         {

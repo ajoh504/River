@@ -14,7 +14,7 @@ namespace River.Infrastructure.Migrations
                 name: "ignored_directory",
                 columns: table => new
                 {
-                    id = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    id = table.Column<long>(type: "bigint", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     path = table.Column<string>(type: "text", nullable: false),
                     inactive = table.Column<bool>(type: "boolean", nullable: false)
@@ -29,7 +29,7 @@ namespace River.Infrastructure.Migrations
                 name: "ignored_file",
                 columns: table => new
                 {
-                    id = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    id = table.Column<long>(type: "bigint", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     path = table.Column<string>(type: "text", nullable: false),
                     extension = table.Column<string>(type: "text", nullable: false),
@@ -39,13 +39,13 @@ namespace River.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_ignored_file", x => x.id);
                 },
-                comment: "Represents an ignoreable file.");
+                comment: "Represents an ignorable file.");
 
             migrationBuilder.CreateTable(
                 name: "tracked_directory",
                 columns: table => new
                 {
-                    id = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    id = table.Column<long>(type: "bigint", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     path = table.Column<string>(type: "text", nullable: false),
                     inactive = table.Column<bool>(type: "boolean", nullable: false)
@@ -60,7 +60,7 @@ namespace River.Infrastructure.Migrations
                 name: "tracked_solo_file",
                 columns: table => new
                 {
-                    id = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    id = table.Column<long>(type: "bigint", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     path = table.Column<string>(type: "text", nullable: false),
                     extension = table.Column<string>(type: "text", nullable: false),
@@ -76,18 +76,18 @@ namespace River.Infrastructure.Migrations
                 name: "tracked_file",
                 columns: table => new
                 {
-                    id = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    id = table.Column<long>(type: "bigint", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     path = table.Column<string>(type: "text", nullable: false),
                     extension = table.Column<string>(type: "text", nullable: false),
-                    directory_id = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    directory_id = table.Column<long>(type: "bigint", nullable: false),
                     inactive = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_file", x => x.id);
+                    table.PrimaryKey("PK_tracked_file", x => x.id);
                     table.ForeignKey(
-                        name: "FK_file_tracked_directory_directory_id",
+                        name: "FK_tracked_file_tracked_directory_directory_id",
                         column: x => x.directory_id,
                         principalTable: "tracked_directory",
                         principalColumn: "id",
@@ -96,16 +96,46 @@ namespace River.Infrastructure.Migrations
                 comment: "Represents a trackable file with a parent directory reference. Changes to the parent are also trackable.");
 
             migrationBuilder.CreateIndex(
-                name: "IX_file_directory_id",
-                table: "file",
+                name: "IX_tracked_file_directory_id",
+                table: "tracked_file",
                 column: "directory_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tracked_directory_path",
+                table: "tracked_directory",
+                column: "path",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tracked_file_path",
+                table: "tracked_file",
+                column: "path",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ignored_directory_path",
+                table: "ignored_directory",
+                column: "path",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ignored_file_path",
+                table: "ignored_file",
+                column: "path",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tracked_solo_file_path",
+                table: "tracked_solo_file",
+                column: "path",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "file");
+                name: "tracked_file");
 
             migrationBuilder.DropTable(
                 name: "ignored_directory");

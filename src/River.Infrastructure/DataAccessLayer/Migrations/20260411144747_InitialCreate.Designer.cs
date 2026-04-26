@@ -26,9 +26,9 @@ namespace River.Infrastructure.Migrations
 
             modelBuilder.Entity("River.Infrastructure.DataAccessLayer.Entities.IgnoredDirectoryEntity", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(20,0)")
+                        .HasColumnType("bigint")
                         .HasColumnName("id");
 
                     b.Property<bool>("Inactive")
@@ -55,9 +55,9 @@ namespace River.Infrastructure.Migrations
 
             modelBuilder.Entity("River.Infrastructure.DataAccessLayer.Entities.IgnoredFileEntity", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(20,0)")
+                        .HasColumnType("bigint")
                         .HasColumnName("id");
 
                     b.Property<string>("Extension")
@@ -83,15 +83,15 @@ namespace River.Infrastructure.Migrations
 
                     b.ToTable("ignored_file", null, t =>
                         {
-                            t.HasComment("Represents an ignoreable file.");
+                            t.HasComment("Represents an ignorable file.");
                         });
                 });
 
             modelBuilder.Entity("River.Infrastructure.DataAccessLayer.Entities.TrackedDirectoryEntity", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(20,0)")
+                        .HasColumnType("bigint")
                         .HasColumnName("id");
 
                     b.Property<bool>("Inactive")
@@ -118,13 +118,13 @@ namespace River.Infrastructure.Migrations
 
             modelBuilder.Entity("River.Infrastructure.DataAccessLayer.Entities.TrackedFileEntity", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(20,0)")
+                        .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    b.Property<decimal>("DirectoryId")
-                        .HasColumnType("numeric(20,0)")
+                    b.Property<long>("DirectoryId")
+                        .HasColumnType("bigint")
                         .HasColumnName("directory_id");
 
                     b.Property<string>("Extension")
@@ -158,9 +158,9 @@ namespace River.Infrastructure.Migrations
 
             modelBuilder.Entity("River.Infrastructure.DataAccessLayer.Entities.TrackedSoloFileEntity", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(20,0)")
+                        .HasColumnType("bigint")
                         .HasColumnName("id");
 
                     b.Property<string>("Extension")
